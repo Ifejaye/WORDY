@@ -3,9 +3,12 @@ const express = require('express');
 const {Post} = require('../models/post');
 const {postRouter} = require('../routes/postRoutes');
 const {mainRouter} = require('../routes/mainRoutes');
+const dotenv = require('dotenv').config();
 
 
 const app = express();
+
+const PORT = process.env.PORT || 5000;
 
 // setting the view engine
 app.set('view engine', 'ejs');
@@ -22,8 +25,8 @@ dbURI = 'mongodb+srv://TestUser:testtest@mydb.oefal.mongodb.net/wordy?retryWrite
 mongoose
 .connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((result)=>{
-    app.listen(5000, ()=>{
-        console.log('App is listening on port 5000')
+    app.listen(PORT, ()=>{
+        console.log(`App is listening on port 5000 ${PORT}`)
     });
 })
 .catch((error)=>{

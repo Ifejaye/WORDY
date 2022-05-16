@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <%- include('../partials/head')%>
+  
+  <body class="text-center">
+    <div class="container py-3">
+        <%- include('../partials/header')%> 
+    </div>
+<main>
+  <div class="container py">
+    <form action="/signin" method="post">
+      <img class="mb-4"  src="./images/person-hearts.svg" alt="" color="#0000CD" width="72" height="57">
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  
+      <div class="mb-3 row">
+        <label for="email" class="col-sm-2 col-form-label">E-Mail</label>
+        <div class="col-sm-10">
+          <input 
+          type="e-mail" 
+          class="form-control"
+          id="email" 
+          name="email"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+      <label for="password" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+          <input 
+          type="password" 
+          class="form-control"
+          id="password" 
+          name="password"
+          />
+          
+        </div>
+      </div>
+      <button class="w-10 mb-3 btn btn-lg btn-primary" type="submit">Sign in</button>
+      <p id = 'demo'>Do not have an account?<a href="/signup">Sign up!</a></p>
+      <%- include('../partials/footer')%>
+    </form>
+  </div>
+</main>
+
+
+    
+  </body>
+</html>

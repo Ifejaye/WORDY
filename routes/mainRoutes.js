@@ -2,10 +2,18 @@ const express = require('express');
 const {Post} = require('../models/post');
 const mainRouter = express.Router();
 
-
+// middleware to test if authenticated
+function isAuth (req, res, next) {
+    if (req.session.user) {
+        next()        
+    } else {
+        res.redirect('/signin')
+        
+    }
+  }
 
 // setting up our homepage
-mainRouter.get('/',(req,res)=>{
+mainRouter.get('/', isAuth, (req,res)=>{
     Post.find()
     .sort({createdAt: -1})
         .then((result)=>{
@@ -13,12 +21,10 @@ mainRouter.get('/',(req,res)=>{
         }).catch((error)=>{
             console.log(error);
         })
-    
-
 });
 
 // setting our about page
-mainRouter.get('/about', (req,res)=>{
+mainRouter.get('/about',isAuth, (req,res)=>{
     res.render('about')
 })
 

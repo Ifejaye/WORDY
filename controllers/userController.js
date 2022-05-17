@@ -9,12 +9,19 @@ const get_signin = (req,res)=>{
 }
 
 //To get the signup page
-const get_signup = (req,res)=>{
-    console.log(req.session);
+const get_signup = async(req,res)=>{
+    const {username, email, password } = req.body
+    let user = await User.findOne({email})
+    if (user.email) {
+        console.log('User already exist');
+        res.redirect('/signup')
+    } else {
+        console.log(req.session);
     req.session.save(()=>{
         console.log('done');
     })
     res.render('signup')
+    }   
 }
 
 // To sumbmit our sign in page

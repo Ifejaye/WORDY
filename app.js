@@ -16,7 +16,7 @@ const { userRouter } = require('./routes/userRoutes');
 
 const app = express();
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT||5000
 
 // setting the view engine
 app.set('view engine', 'ejs');
@@ -50,7 +50,7 @@ app.use(
 mongoose
 .connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((result)=>{
-    app.listen(5000, ()=>{
+    app.listen(PORT, ()=>{
         console.log('App is listening on port 5000')
     });
 })

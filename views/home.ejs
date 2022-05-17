@@ -12,7 +12,11 @@
         <div class="container-fluid">
           <h1 class="display-5 fw-bold">Welcome to Wordy</h1>
           <p class="col-md-12 fs-4">Wordy is a mini blog that is built with NodeJS on top of the express framework. Wordy allows anyone, like you, to publish post without requiring validation.</p>
-          <a class="btn btn-primary btn-lg" type="button" href='/posts/new_post'>Publish A Post</a>
+          <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom mt-auto">
+            <a class="btn btn-primary btn-lg " type="button" href='/posts/new_post'>Publish A Post</a>
+            <a class="btn btn-danger btn-lg d-inline-flex mt-2 mt-md-0 ms-md-auto" type="button" href='/signout'>Sign Out</a>
+
+          </div>
         </div>
       </div>
   <!-- /new_post -->

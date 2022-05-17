@@ -2,8 +2,8 @@ const { User } = require('../models/user');
 const  bcrypt = require('bcrypt');
 
 
-// To get our signin page
 
+// To get our signin page
 const get_signin = (req,res)=>{
     res.render('signin')
 }
@@ -12,7 +12,7 @@ const get_signin = (req,res)=>{
 const get_signup = async(req,res)=>{
     const {username, email, password } = req.body
     let user = await User.findOne({email})
-    if (user.email) {
+    if (email) {
         console.log('User already exist');
         res.redirect('/signup')
     } else {
@@ -99,9 +99,26 @@ const create_new_user = async(req,res)=>{
     }
 }
 
+const sign_me_out = (req,res)=>{
+    if (req.session) {
+        req.session.destroy(err => {
+          if (err) {
+            res.redirect('/')
+          } else {
+            res.redirect('/signin');
+          }
+        });
+      } else {
+        res.end()
+      }
+}
+
+
+
 module.exports = {
     get_signin,
     get_signup,
     submit_login,
-    create_new_user
+    create_new_user,
+    sign_me_out,
 }

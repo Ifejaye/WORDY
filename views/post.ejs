@@ -11,6 +11,8 @@
     <div class="container">
       <h1 class="display-5 fw-bold"><%= posts.title %></h1>
       <p class="fs-4"><%= posts.content %></p>
+     <!-- This is where I add the exception -->
+     <% if (aUser == posts.author){%>
       <div class="d-flex justify-content-between">
         <a 
         class="btn btn-lg btn-danger"
@@ -21,7 +23,7 @@
 
         <a href="/posts/update_post/<%=posts._id%>" class="btn btn-lg btn-primary">Update</a>
       </div>
-     
+     <%}%>
    </div>
   </main>
 

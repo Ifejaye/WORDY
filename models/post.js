@@ -3,18 +3,22 @@ const {Schema} = require('mongoose');
 // const {Post} = require('./models/post')
 
 const postSchema = new Schema({
+    author:{
+        type: String,
+        required: false,
+    },
     title:{
         type: String,
         required: true,
     },
-    snippet:{
-        type: String,
-        required:true,
-    },
     content:{
         type: String,
         required: true,
-    },    
+    },  
+    Comment:{
+        type: String,
+        required: false,
+    }  
 },
 {timestamps: true})
 

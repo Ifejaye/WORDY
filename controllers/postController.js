@@ -1,4 +1,5 @@
 const {Post} = require('../models/post');
+const {User} = require('../models/user');
 
 
 
@@ -9,10 +10,15 @@ const get_new_post = (req,res)=>{
 
 //  for publishing new post
 const publish_new_post = async(req,res)=>{
-    // we will soon insert our save message.
+    // we will soon insert our save message.    
     try {
-        const post = new Post(req.body)
+        const post = new Post({
+            author: req.session.user,
+            title: req.body.title,
+            content: req.body.content,
+        })
         result = await post.save();
+        console.log(post);
         res.redirect('/');           // This is to redirect the user back to the homepage 
     } catch (error) {
         console.log(error);
@@ -25,7 +31,9 @@ const get_single_post = (req,res)=>{
     const id = req.params.id;
     Post.findById(id)
     .then((result)=>{
-        res.render('post', {posts: result})
+        console.log(req.session.user);
+        const aUser = req.session.user
+        res.render('post', {posts: result, aUser: aUser})
     }).catch((error)=>{
         console.log(error);
     })

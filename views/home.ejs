@@ -6,40 +6,35 @@
     <%- include('../partials/svg')%>
 
 <div class="container py-3">
-  <%- include('../partials/header')%>
-  <main>
-    <div class="mb-4 bg-light rounded-3">
-        <div class="container-fluid">
-          <h1 class="display-5 fw-bold">Welcome to Wordy</h1>
-          <p class="col-md-12 fs-4">Wordy is a mini blog that is built with NodeJS on top of the express framework. Wordy is a platform Where you can air your thoughts and opinions without <span class="text-danger">FEAR</span >.You can publish post anonymously.<span class="text-success"><strong> Publish it!</strong></span> You can't be shy.
-          </p>
-          <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom mt-auto">
-            <a class="btn btn-primary btn-lg " type="button" href='/posts/new_post'>Publish A Post</a>
-            <a class="btn btn-danger btn-lg d-inline-flex mt-2 mt-md-0 ms-md-auto" type="button" href='/signout'>Sign Out</a>
-
+  <%- include('../partials/header')%>   
+    <div class="container">
+      <main class="container">
+        <div class="p-4 p-md-5 mb-4 text-dark fs-4 rounded bg-light">
+          <div class="col-md-12 px-0">
+            <section href="gere"></section>
+            <h1 class="display-5 fst-italic text-primary fw-bold" ><strong>Welcome to Wordy</strong></h1>
+            <p class="lead my-3 fw-bold"></p>Wordy is a mini blog that is built with NodeJS on top of the express framework. Wordy is a platform Where you can air your thoughts and opinions without <span class="text-danger">FEAR</span >. You can publish post anonymously.<span class="text-success"><strong> Publish it!</strong></span> You can't be shy.</p>
           </div>
         </div>
-      </div>
-  <!-- /new_post -->
-      <div class="row align-items-md-stretch">
-        <%posts.forEach((post)=>{%>
-          <div class="col-md-6 mt-2">
-            <div class="h-100 p-5 text-white bg-secondary rounded-3">
-              <h2><%= post.title%></h2>
-              <p><%= post.content%></p>
-              <a 
-              class= "btn btn-outline-light" 
-              type="button" 
-              href ="/posts/read/<%= post._id%>"
-              >
-              Read More
-            </a>
+      
+        <div class="row mb-2 ">
+          <%posts.forEach((post)=>{%>
+          <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-grey opacity-1">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">@ <%=post.author%></strong>
+                <h3 class="mb-0"><%= post.title%></h3>
+                <p class="card-text mb-auto"><%= post.content%></p>
+                <a href="/posts/read/<%= post._id%>" class="stretched-link">Continue reading</a>
+              </div>
+              
             </div>
           </div>
-        <%})%>
-       
-        
-  </main>
+          <%})%>
+        </div>  
+              
+      </main>
+    </div>
 
   <%- include('../partials/footer')%>
 </div>

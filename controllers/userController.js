@@ -1,5 +1,6 @@
 const { User } = require('../models/user');
 const  bcrypt = require('bcrypt');
+const { render } = require('ejs');
 
 
 
@@ -48,7 +49,7 @@ const submit_login = async(req,res)=>{
                     console.log(req.session);
                     req.session.save(function (err) {
                       if (err) 
-                      return console.log(err)
+                      return render({mismatch: "body"})
                       res.redirect('/')
                     })
                   })
@@ -58,7 +59,7 @@ const submit_login = async(req,res)=>{
                 res.redirect('/signin')
             }   
     } else {
-        res.redirect('/signup')
+        res.render('signin',{mismatch: "body"})
     } 
 }
 

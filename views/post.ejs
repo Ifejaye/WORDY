@@ -7,24 +7,63 @@
 
 <div class="container py-3">
   <%- include('../partials/header')%>
-  <main class="post">
-    <div class="container">
-      <h1 class="display-5 fw-bold"><%= posts.title %></h1>
-      <p class="fs-4"><%= posts.content %></p>
-     <!-- This is where I add the exception -->
-     <% if (aUser == posts.author){%>
-      <div class="d-flex justify-content-between">
-        <a 
-        class="btn btn-lg btn-danger"
-        id="delete"
-        type="button"
-        data-id= "<%= posts._id %>"
-        >Delete</a>
+  <main class="container">
+    <div class="p-4 p-md-5 mb-4 text-dark fs-4 rounded bg-light">
+      <div class="col-md-12 px-0">
+        
+        <div class="position-relative">
+          <div class="display-5 fst-italic text-primary fw-bold position-absolute top-50 start-2" >
+            <strong><%= posts.title %></strong></div>
+          <a class="text-muted text-decoration-none position-absolute top-0 end-0">@<%=posts.author%></a>
+        </div><br><br>
+        <p class="lead mt-50 my-3 fw-bold"></p><%= posts.content %></p>
 
-        <a href="/posts/update_post/<%=posts._id%>" class="btn btn-lg btn-primary">Update</a>
+        <!-- Delete and update section -->
+        <% if (aUser == posts.author){%>        
+          <div class="d-flex justify-content-between mt-3 md-5">
+          <a 
+          class="btn btn-lg btn-danger"
+          id="delete"
+          type="button"
+          data-id= "<%= posts._id %>"
+          >Delete</a>
+          <a href="/posts/update_post/<%=posts._id%>" class="btn btn-lg btn-primary">Update</a>
+        </div><br>
+        <%}%>
+
+
+        <!-- Send comment section -->
+        <form action="/comment/<%=posts._id%>" method="post" >
+        <div class="hstack gap-3 flex-col" >
+          <input class="form-control"
+            type="text"
+            placeholder="What do think about this?"
+            id="reply"
+            name="reply"
+            > 
+            <button type="submit" class="btn btn-outline-primary">Send</button>
+          </div>
+        </form>
       </div>
-     <%}%>
-   </div>
+    </div>
+  
+
+    <!-- Display comment section -->
+    <div class="row mb-2 ">
+      <%comments.forEach((comment)=>{%>
+      <div class="col-md-12">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-grey opacity-1">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">@<%= comment.commenter %></strong>
+            <div class="mb-1 text-muted">Nov 12</div>
+            <p class="card-text mb-auto"><%= comment.content %></p>
+          </div>
+          
+        </div>
+      </div>
+      <%})%>
+    </div>  
+          
   </main>
 
   <%- include('../partials/footer')%>

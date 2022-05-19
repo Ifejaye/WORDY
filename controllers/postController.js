@@ -1,5 +1,6 @@
 const {Post} = require('../models/post');
-const {User} = require('../models/user');
+const {Comment} = require('../models/comment')
+
 
 
 
@@ -29,14 +30,26 @@ const publish_new_post = async(req,res)=>{
 const get_single_post = (req,res)=>{ 
     console.log(req.params.id);
     const id = req.params.id;
+   
     Post.findById(id)
-    .then((result)=>{
+    .then((result1)=>{
+        const aUser = req.session.user;
         console.log(req.session.user);
-        const aUser = req.session.user
-        res.render('post', {posts: result, aUser: aUser})
+        Comment.find({id})
+        .then((result2)=>{
+            console.log(result1.createdAt);
+            const date = new Date(result1.createdAt);
+            console.log(date);
+            const done = "done";
+            res.render('post', {posts: result1, aUser: aUser, comments:result2, editValue:done})
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
     }).catch((error)=>{
         console.log(error);
     })
+    // Sine we have got the posts, let's then get comments
 }
 
 const get_update_post_form = (req,res)=>{
@@ -50,7 +63,7 @@ const get_update_post_form = (req,res)=>{
 }
 
 const update_single_post = (req,res)=>{
-    const id = req.params.id
+    const id = req.params.id;
     Post.findByIdAndUpdate(id, req.body)
     .then((result)=>{
         res.redirect('/') 

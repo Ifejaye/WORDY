@@ -14,11 +14,7 @@ const postSchema = new Schema({
     content:{
         type: String,
         required: true,
-    },  
-    Comment:{
-        type: String,
-        required: false,
-    }  
+    },    
 },
 {timestamps: true})
 

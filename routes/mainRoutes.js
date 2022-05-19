@@ -18,10 +18,11 @@ mainRouter.get('/', isAuth, (req,res)=>{
     .sort({createdAt: -1})
         .then((result)=>{
             res.render('home', {posts: result});
-        }).catch((error)=>{
+            }).catch((error)=>{
             console.log(error);
         })
-});
+    });
+
 
 // setting our about page
 mainRouter.get('/about',isAuth, (req,res)=>{

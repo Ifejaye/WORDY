@@ -11,15 +11,19 @@ const get_new_post = (req,res)=>{
 
 //  for publishing new post
 const publish_new_post = async(req,res)=>{
-    // we will soon insert our save message.    
+    // we will soon insert our save message. 
+    const {title, content} = req.body;  
+    
+    const body = content.substring(1,500);
+    
     try {
         const post = new Post({
             author: req.session.user,
             title: req.body.title,
             content: req.body.content,
+            snippet: body,
         })
         result = await post.save();
-        console.log(post);
         res.redirect('/');           // This is to redirect the user back to the homepage 
     } catch (error) {
         console.log(error);
@@ -28,20 +32,17 @@ const publish_new_post = async(req,res)=>{
 }
 
 const get_single_post = (req,res)=>{ 
-    console.log(req.params.id);
     const id = req.params.id;
    
     Post.findById(id)
     .then((result1)=>{
         const aUser = req.session.user;
-        console.log(req.session.user);
         Comment.find({id})
         .then((result2)=>{
-            console.log(result1.createdAt);
-            const date = new Date(result1.createdAt);
-            console.log(date);
-            const done = "done";
-            res.render('post', {posts: result1, aUser: aUser, comments:result2, editValue:done})
+            res.render('post', {
+                posts: result1,
+                aUser: aUser, comments:result2, 
+                })
         })
         .catch((error)=>{
             console.log(error);

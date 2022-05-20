@@ -60,9 +60,7 @@ mongoose
 });
 
 app.post('/comment/:id', (req,res)=>{
-    // const id = req.params.id;
-    console.log(req.body);
-    res.redirect('/')
+    const id = req.params.id;
     const newComment = new Comment({
         source: id,
         commenter: req.session.user,

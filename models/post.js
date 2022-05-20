@@ -14,9 +14,22 @@ const postSchema = new Schema({
     content:{
         type: String,
         required: true,
-    },    
-},
-{timestamps: true})
+    },
+    snippet:{
+        type: String,
+    },
+    date:{
+        type: Date,
+        default: Date.now,
+    },
+    edit:{
+        type:Boolean,
+        default: false
+    },
+    likes:{
+        type:Number
+    }
+},{timestamps: true})
 
 const Post = mongoose.model('Post', postSchema);
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {schema} = require('mongoose');
 
-const commentSchema = newSchema = {
+const commentSchema = newSchema = ({
     source:{
         type: String,
         required: true,
@@ -13,8 +13,12 @@ const commentSchema = newSchema = {
     content:{
         type: String,
         required: true,
+    },
+    date:{
+        type: Date,
+        default: Date.now,
     }
-}
+})
 
 const Comment = mongoose.model('Comment',commentSchema);
 module.exports = {Comment}

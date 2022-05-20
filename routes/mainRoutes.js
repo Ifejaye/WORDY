@@ -16,8 +16,8 @@ function isAuth (req, res, next) {
 mainRouter.get('/', isAuth, (req,res)=>{
     Post.find()
     .sort({createdAt: -1})
-        .then((result)=>{
-            res.render('home', {posts: result});
+        .then((myResult)=>{
+            res.render('home', {posts: myResult,});
             }).catch((error)=>{
             console.log(error);
         })

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const {Post} = require('./models/post');
 const {User} = require('./models/user');
-const {Comment} = require('./models/comment')
+const {Comment} = require('./models/post')
 const session = require('express-session');
 const MongodbSession = require('connect-mongodb-session')(session);
 const bodyParser = require('body-parser');
@@ -58,30 +58,16 @@ mongoose
 .catch((error)=>{
     console.log(error);
 });
+   
 
-app.post('/comment/:id', (req,res)=>{
-    const id = req.params.id;
-    const newComment = new Comment({
-        source: id,
-        commenter: req.session.user,
-        content: req.body.reply,
-    })
-    result = newComment.save()
-    .then((result)=>{
-        console.log('saved');
-        res.redirect('/')
-    })
-    .catch((error)=>{
-        console.log(error);
-
-    })
-})
 
 // app.use(userRouter);   
-app.use(userRouter)
+app.use(userRouter);
 // Route tp everything related to out post
 app.use("/posts", postRouter);
 
 
  // Router for everythng relating to our home
 app.use(mainRouter);
+
+

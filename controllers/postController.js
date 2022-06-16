@@ -1,5 +1,5 @@
 const {Post} = require('../models/post');
-const {Comment} = require('../models/comment')
+const {Comment} = require('../models/post')
 
 
 
@@ -12,16 +12,14 @@ const get_new_post = (req,res)=>{
 //  for publishing new post
 const publish_new_post = async(req,res)=>{
     // we will soon insert our save message. 
-    const {title, content} = req.body;  
-    
-    const body = content.substring(1,500);
-    
+    const {title, content} = req.body;      
+    const snippet = content.substring(0,50);    
     try {
         const post = new Post({
             author: req.session.user,
             title: req.body.title,
             content: req.body.content,
-            snippet: body,
+            snippet: snippet,
         })
         result = await post.save();
         res.redirect('/');           // This is to redirect the user back to the homepage 
@@ -31,30 +29,38 @@ const publish_new_post = async(req,res)=>{
     
 }
 
+
 const get_single_post = (req,res)=>{ 
-    const id = req.params.id;
-   
-    Post.findById(id)
-    .then((result1)=>{
-        const aUser = req.session.user;
-        Comment.find({id})
-        .then((result2)=>{
-            res.render('post', {
-                posts: result1,
-                aUser: aUser, comments:result2, 
-                })
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
+    const postId = req.params.id;
+    console.log(postId);   
+    viewPost = async()=>{
+        const postResult = await Post.findById(postId)
+    .then((result)=>{
+        return result
     }).catch((error)=>{
         console.log(error);
-    })
-    // Sine we have got the posts, let's then get comments
+    });
+
+    const commentResult = await Comment.find({sourcePost: postId})
+        .then((result)=>{
+            return result      
+        }).catch((err)=>{
+            console.log(err)
+        }
+    );
+
+    console.log('comment   ' + commentResult);
+    const aUser = req.session.user
+                 res.render('post', {
+                    posts: postResult,
+                    comments: commentResult,
+                    aUser: aUser,  
+                    })
+    }  
+    viewPost();
 }
 
 const get_update_post_form = (req,res)=>{
-    const id = req.params.id
     Post.findById(id)
     .then((result)=>{
         res.render('update_post', {post: result})
@@ -91,7 +97,25 @@ const delete_single_post = (req,res)=>{
             
         });
     });
-}
+};
+
+const add_new_comment = (req,res)=>{
+    
+    const theId = req.params.id;
+      const comment = new Comment({
+          commenter: req.session.user,
+          content: req.body.reply,
+          sourcePost: theId,  // assign the _id from the person
+      });
+    
+      comment.save(function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+      res.redirect('/')
+    };
+
 
 module.exports = {
     get_new_post,
@@ -99,5 +123,6 @@ module.exports = {
     get_single_post,
     get_update_post_form,
     update_single_post,
-    delete_single_post
+    delete_single_post,
+    add_new_comment,
 }

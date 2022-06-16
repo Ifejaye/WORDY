@@ -17,8 +17,12 @@ postRouter.get('/read/:id',postController.get_single_post);
 postRouter.get('/update_post/:id',postController.get_update_post_form);
 
 // To post the updated form
-postRouter.post('/update_post/:id',postController.update_single_post)
+postRouter.post('/update_post/:id',postController.update_single_post);
 
+// To delete posts
 postRouter.delete('/delete_post/:id', postController.delete_single_post);
+
+// To add new comment to a specific post 
+postRouter.post('/comment/:id', postController.add_new_comment);
 
 module.exports = {postRouter}

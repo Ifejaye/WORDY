@@ -35,7 +35,7 @@
 
 
         <!-- Send comment section -->
-        <form action="/comment/<%=posts._id%>" method="post" >
+        <form action="/posts/comment/<%=posts._id%>" method="post" >
         <div class="hstack gap-3 flex-col" >
           <input class="form-control"
             type="text"
@@ -75,21 +75,17 @@
 const postDelete = document.querySelector('#delete');
 const postId = postDelete.dataset.id;
 console.log(postId);
-
 postDelete.onclick = async function () {
   const request = await fetch (`/posts/delete_post/${postId}`, {
     method: 'delete',
   });
   const response = await request.json();
-
   if (response.status == true){
     window.location.href = response.redirect;
   } else {
     alert("Could not delete post")
   }
-
 }
-
 </script>    
   </body>
 </html>

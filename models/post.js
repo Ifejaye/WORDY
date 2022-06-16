@@ -28,9 +28,45 @@ const postSchema = new Schema({
     },
     likes:{
         type:Number
+    },
+    comments:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Comments'
+    }]
+    
+},{timestamps: true});
+
+
+const commentSchema = newSchema = ({
+    commenter:{
+        type: String,
+        required: true,
+    },
+    content:{
+        type: String,
+        required: true,
+    },
+    date:{
+        type: Date,
+        default: Date.now,
+    },
+    sourcePost: {
+        type: String,
     }
-},{timestamps: true})
+})
+
+
+
+
+
+
+
 
 const Post = mongoose.model('Post', postSchema);
+const Comment = mongoose.model('Comment',commentSchema);
 
-module.exports = {Post};
+
+module.exports = {
+    Post :Post,
+    Comment : Comment
+}

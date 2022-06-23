@@ -74,7 +74,7 @@
 <script>
 const postDelete = document.querySelector('#delete');
 const postId = postDelete.dataset.id;
-console.log(postId);
+// console.log(postId);
 postDelete.onclick = async function () {
   const request = await fetch (`/posts/delete_post/${postId}`, {
     method: 'delete',

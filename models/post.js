@@ -29,15 +29,15 @@ const postSchema = new Schema({
     likes:{
         type:Number
     },
-    comments:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Comments'
-    }]
     
-},{timestamps: true});
+},{timestamps: true, strictPopulate: false});
 
 
 const commentSchema = newSchema = ({
+    sourcePost: {
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+    },
     commenter:{
         type: String,
         required: true,
@@ -50,9 +50,7 @@ const commentSchema = newSchema = ({
         type: Date,
         default: Date.now,
     },
-    sourcePost: {
-        type: String,
-    }
+    
 })
 
 

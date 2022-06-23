@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const {Post} = require('../models/post');
 const {Comment} = require('../models/post')
 
@@ -32,24 +33,23 @@ const publish_new_post = async(req,res)=>{
 
 const get_single_post = (req,res)=>{ 
     const postId = req.params.id;
-    console.log(postId);   
     viewPost = async()=>{
         const postResult = await Post.findById(postId)
-    .then((result)=>{
+        .then((result)=>{
         return result
     }).catch((error)=>{
         console.log(error);
     });
-
-    const commentResult = await Comment.find({sourcePost: postId})
-        .then((result)=>{
-            return result      
-        }).catch((err)=>{
-            console.log(err)
-        }
+    
+    const commentResult = await Comment
+    .find({sourcePost: postId})
+    .populate('sourcePost')
+    .then((result)=>{
+        return result      
+    }).catch((err)=>{
+        console.log(err)
+    }
     );
-
-    console.log('comment   ' + commentResult);
     const aUser = req.session.user
                  res.render('post', {
                     posts: postResult,
@@ -94,26 +94,25 @@ const delete_single_post = (req,res)=>{
             status: false,
             message: 'Something went wrong',
             full_error: error,
-            
         });
     });
+
 };
 
 const add_new_comment = (req,res)=>{
+    const postId = req.params.id
     
-    const theId = req.params.id;
-      const comment = new Comment({
-          commenter: req.session.user,
-          content: req.body.reply,
-          sourcePost: theId,  // assign the _id from the person
-      });
-    
-      comment.save(function (err) {
-        if (err) {
-          console.log(err);
-        }
-      });
-      res.redirect('/')
+            const newComment = new Comment ({
+            commenter: req.session.user,
+            content: req.body.reply,
+            sourcePost: postId
+        })
+        newComment.save(function (err) {
+            if (err) {
+              console.log(err);
+            }
+            res.redirect('/')
+          });
     };
 
 

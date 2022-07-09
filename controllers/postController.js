@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const {Post} = require('../models/post');
-const {Comment} = require('../models/post')
+const {Comment} = require('../models/post');
+const { User } = require('../models/user');
 
 
 
@@ -50,12 +51,35 @@ const get_single_post = (req,res)=>{
         console.log(err)
     }
     );
-    const aUser = req.session.user
-                 res.render('post', {
-                    posts: postResult,
-                    comments: commentResult,
-                    aUser: aUser,  
-                    })
+    const aUser = req.session.user;
+    
+    const userResult = await User
+    .findOne({username: req.session.user})
+    .then((result)=>{
+        return result._id
+    })
+     const liked = postResult.likes.includes(userResult)
+     if (liked) {
+        res.render('post',{
+            posts:postResult,
+            comments: commentResult,
+            aUser: aUser,
+            likee: true
+        })
+        
+     } else {
+        res.render('post',{
+            posts:postResult,
+            comments: commentResult,
+            aUser: aUser,
+            likee: false
+        })     
+      }
+
+       
+        
+    
+                 
     }  
     viewPost();
 }
@@ -105,7 +129,7 @@ const add_new_comment = (req,res)=>{
             const newComment = new Comment ({
             commenter: req.session.user,
             content: req.body.reply,
-            sourcePost: postId
+            sourcePost: postId, 
         })
         newComment.save(function (err) {
             if (err) {

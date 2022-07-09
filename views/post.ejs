@@ -8,63 +8,94 @@
 <div class="container py-3">
   <%- include('../partials/header')%>
   <main class="container">
-    <div class="p-4 p-md-5 mb-4 text-dark fs-4 rounded bg-light">
-      <div class="col-md-12 px-0">
-        
-        
-          <div class="display-4 fst-italic text-primary]" >
-            <strong><%= posts.title %></strong>
-          </div><br>
-          <div class="text-muted text-decoration-none">@<%=posts.author%></div>
-        <br>
-        <div class="text-muted"><%posts.date%></div>
-        <p class="lead mt-50 my-3 fw-bold"></p><%= posts.content %></p>
-
-        <!-- Delete and update section -->
-        <% if (aUser == posts.author){%>        
-          <div class="d-flex justify-content-between mt-3 md-5">
-          <a 
-          class="btn btn-lg btn-danger"
-          id="delete"
-          type="button"
-          data-id= "<%= posts._id %>"
-          >Delete</a>
-          <a href="/posts/update_post/<%=posts._id%>" class="btn btn-lg btn-primary">Update</a>
-        </div><br>
-        <%}%>
-
-
-        <!-- Send comment section -->
-        <form action="/posts/comment/<%=posts._id%>" method="post" >
-        <div class="hstack gap-3 flex-col" >
-          <input class="form-control"
-            type="text"
-            placeholder="What do think about this?"
-            id="reply"
-            name="reply"
-            > 
-            <button type="submit" class="btn btn-outline-primary">Send</button>
-            
-          </div>
-        </form>
-      </div>
-    </div>
-  
-
-    <!-- Display comment section -->
-    <div class="row mb-2 ">
-      <%comments.forEach((comments)=>{%>
-      <div class="col-md-12">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-grey opacity-1">
-          <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">@<%= comments.commenter %></strong>
-            <div class="mb-1 text-muted"><%=comments.date%></div>
-            <p class="card-text mb-auto"><%= comments.content %></p>
-          </div>
+    <div class="vstack">
+      <div class="p-4 p-md-5 mb-4 text-dark fs-4 rounded bg-light">
+        <div class="col-md-12 px-0">
           
+          
+            <div class="display-4 fst-italic text-primary]" >
+              <strong><%= posts.title %></strong>
+            </div>
+            <div class="text-muted text-decoration-none">@<%=posts.author%></div>
+          <div class="text-muted"><%posts.date%></div>
+          <p class="lead fw-bold"></p><%= posts.content %></p>
+  
+          <!-- Delete and update section -->
+          <% if (aUser == posts.author){%>        
+            <div class="d-flex justify-content-between mt-3 md-5">
+            <a 
+            class="btn btn-lg btn-danger"
+            id="delete"
+            type="button"
+            data-id= "<%= posts._id %>"
+            >Delete</a>
+            <a href="/posts/update_post/<%=posts._id%>" class="btn btn-lg btn-primary">Update</a>
+          </div><br>
+          <%}%>
+
+
+          
+  
+  
+          <!-- Like Section -->
+         <div class="container">
+          
+           <%if(likee == false){%>
+            <a  href="/posts/likepost/<%=posts._id%>"
+              class="danger d-inline px-2 mb-2"
+              id="like"
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+              </svg>
+            </a>
+              <%}else{%>
+                <a  href="/posts/unlikepost/<%=posts._id%>"
+                  class="danger d-inline px-2 mb-2"
+                  id="like"
+                  >
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-balloon-heart-fill" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8.49 10.92C19.412 3.382 11.28-2.387 8 .986 4.719-2.387-3.413 3.382 7.51 10.92l-.234.468a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2.376 2.376 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224l-.235-.468ZM6.726 1.269c-1.167-.61-2.8-.142-3.454 1.135-.237.463-.36 1.08-.202 1.85.055.27.467.197.527-.071.285-1.256 1.177-2.462 2.989-2.528.234-.008.348-.278.14-.386Z"/>
+                </svg>  
+              </a>          
+                <%}%>
+              <span class="fs-6">
+              <%= posts.likes.length%> likes
+            </span>
+         </div>
+          <div class="grid">
+            <form action="/posts/comment/<%=posts._id%>" method="post" >
+              <div class="hstack gap-3 flex-col-10" >
+                <input class="form-control"
+                  type="text"
+                  placeholder="What do think about this?"
+                  id="reply"
+                  name="reply"
+                  > 
+                  <button type="submit" class="btn btn-outline-primary">Send</button>
+                  
+                </div>
+              </form>
+          </div>
         </div>
       </div>
-      <%})%>
+    
+  
+      <!-- Display comment section -->
+      <div class="row mb-2 ">
+        <%comments.forEach((comments)=>{%>
+        <div class="col-md-12">
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-grey opacity-1">
+            <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-primary">@<%= comments.commenter %></strong>
+              <div class="mb-1 text-muted"><%=comments.date%></div>
+              <p class="card-text mb-auto"><%= comments.content %></p>
+            </div>
+            
+          </div>
+        </div>
+        <%})%>
+      </div>
     </div>  
           
   </main>
@@ -74,7 +105,9 @@
 <script>
 const postDelete = document.querySelector('#delete');
 const postId = postDelete.dataset.id;
-// console.log(postId);
+const liked = document.querySelector('#like')
+const check = posts.likes.includes(user)
+
 postDelete.onclick = async function () {
   const request = await fetch (`/posts/delete_post/${postId}`, {
     method: 'delete',
@@ -86,6 +119,7 @@ postDelete.onclick = async function () {
     alert("Could not delete post")
   }
 }
+
 </script>    
   </body>
 </html>

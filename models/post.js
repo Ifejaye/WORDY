@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const {Schema} = require('mongoose');
-// const {Post} = require('./models/post')
+const {User} = require('./user')
 
 const postSchema = new Schema({
     author:{
@@ -26,9 +26,10 @@ const postSchema = new Schema({
         type:Boolean,
         default: false
     },
-    likes:{
-        type:Number
-    },
+    likes:[{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     
 },{timestamps: true, strictPopulate: false});
 

@@ -60,7 +60,45 @@ mongoose
 });
    
 
+app.get('/posts/likepost/:id',(req,res)=>{
+    console.log(req.session.user);
 
+    const post_id = req.params.id;
+    User.findOne({username: req.session.user})
+    .then((result)=>{
+        Post.findByIdAndUpdate(post_id, { $push: { likes: result._id } })
+        .then((result2)=>{
+            console.log('done');
+            res.redirect('/')
+        }).catch((err)=>{
+            console.log(err);
+        });
+
+        return result._id
+    })
+   
+})
+
+
+
+app.get('/posts/unlikepost/:id',(req,res)=>{
+    console.log(req.session.user);
+
+    const post_id = req.params.id;
+    User.findOne({username: req.session.user})
+    .then((result)=>{
+        Post.findByIdAndUpdate(post_id, { $pull: { likes: result._id } })
+        .then((result2)=>{
+            console.log('done');
+            res.redirect('/')
+        }).catch((err)=>{
+            console.log(err);
+        });
+
+        return result._id
+    })
+   
+})
 // app.use(userRouter);   
 app.use(userRouter);
 // Route tp everything related to out post

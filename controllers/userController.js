@@ -16,7 +16,6 @@ const get_signup = async(req,res)=>{
         console.log('User already exist');
         res.redirect('/signup')
     } else {
-        console.log(req.session);
     req.session.save(()=>{
         console.log('done');
     })

@@ -30,8 +30,8 @@ mainRouter.get('/about',isAuth, (req,res)=>{
 })
 
 //setting our 404 page
-mainRouter.all('*',(req,res)=>{
-    res.status('404').render('404')
-});
+// mainRouter.all('*',(req,res)=>{
+//     res.status('404').render('404')
+// });
 
 module.exports = {mainRouter}

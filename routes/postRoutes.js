@@ -25,4 +25,10 @@ postRouter.delete('/delete_post/:id', postController.delete_single_post);
 // To add new comment to a specific post 
 postRouter.post('/comment/:id', postController.add_new_comment);
 
+// To like a post
+postRouter.get('/likepost/:id', postController.like_a_post);
+
+// To unlike a liked post
+postRouter.get('/unlikepost/:id', postController.unlike_a_post);
+
 module.exports = {postRouter}

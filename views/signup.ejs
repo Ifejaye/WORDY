@@ -1,121 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-        <meta name="generator" content="Hugo 0.88.1">
-        <meta color = "#0000CD">
-        <title>Wordy | A Mini Blog</title>
-      
-        <link rel="canonical" href="https://img.icons8.com/nolan/2x/microphone.png">
-        <link rel="icon" type="image/x-icon" href="./images/person-hearts.svg" color="#0000CD">  
-      
-        
-        <!-- Bootstrap core CSS -->
-      <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-      <!-- custom CSS -->
-      <style>
-        html,
-body {
-    height: 100%;
-    background-color:rgba(210, 213, 211, 0.618)  !important; 
-    font-family:"Roboto", sans-serif;
-}
-
-.global-container{
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('https://thumbs.dreamstime.com/z/unlock-concept-young-man-front-windows-119665507.jpg');
-
-    /* text-decoration-color: aliceblue; */
-    /* background-color: antiquewhite; */
-}
- 
-form {
-    padding-top: 2px;
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-.login-form {
-    width: 300px;
-    height: 420px;
-    margin: 20px;
-    opacity: 1;
-    background-color: rgb(235, 235, 235)
-}
-
-.justice {
-    justify-content: center;
-}
-button {
-    justify-content: center;
-    margin-top: 2px;
-    align-items: center;
-}
-
-.sign-up{
-    justify-content: center;
-}
-
-
-      </style>
-      </head>
-<body>
-  <!-- <img src="https://image.shutterstock.com/image-photo/collage-portraits-ethnically-diverse-mixed-260nw-725291137.jpg" alt=""> -->
-    <div class="global-container d-flex align-items-center justify-content-center opacity-75" style="border-radius:3px;">
-        <div class="">
-            <div class="card login-form " >
-              <div class="class-header bg-primary">
-                <h1 class="card-title text-center mt-4 text-color-white" style="color: white;" id="signin_bar">Sign up</h1>
-
-              </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <form action="/signup" method="post">
-                             <div class="row">
-                              <label for="username" class="col-form-label">Username</label>
-                              <div class="">
-                                <input type="text" 
-                                class="form-control" 
-                                id="username" 
-                                name="username"
-                                validation>
-                              </div>
-                            </div>
-                            <div class="mb-1 row">
-                              <label for="email" class="col-form-label">E-Mail</label>
-                              <div class="">
-                                <input 
-                                type="e-mail" 
-                                class="form-control"
-                                id="email" 
-                                name="email"
-                                />
-                              </div>
-                            </div>
-                            <div class="mb-1 row">
-                            <label for="password" class="col-form-label">Password</label>
-                            <div class="">
-                                <input 
-                                type="password" 
-                                class="form-control"
-                                id="password" 
-                                name="password"
-                                />
-                              </div>
-                        
-                            <button class="w-10 mb-2 mt-3 btn btn-lg btn-primary" type="submit">Sign up</button>
-                            <p class="text-center">Already have an account? <a href="/signin" class="text-decoration-none">Sign in </a></p>   
-                          </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <%- include('../partials/head')%>
+  
+  <body class="text-center">
+    <div class="container py-3">
+        <%- include('../partials/header')%> 
     </div>
-</body>
+    <main>
+        <div class="container py">
+            <form action="/signup" method="post">
+              <!-- <img class="mb-4"  src="./images/person-hearts.svg" alt="" color="#0000CD" width="72" height="57"> -->
+              <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+              
+        
+              <div class="mb-3 row">
+                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                  <input type="text" 
+                  class="form-control" 
+                  id="username" 
+                  name="username">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="email" class="col-sm-2 col-form-label">E-Mail</label>
+                <div class="col-sm-10">
+                  <input 
+                  type="e-mail" 
+                  class="form-control"
+                  id="email" 
+                  name="email"
+                  />
+                </div>
+              </div>
+              <div class="mb-3 row">
+              <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                  <input 
+                  type="password" 
+                  class="form-control"
+                  id="password" 
+                  name="password"
+                  />
+                </div>
+          
+              <button class="w-10 mb-3 mt-3 btn btn-lg btn-primary" type="submit">Sign up</button>
+              <p>Already have an account? <a href="/signin">Sign in </a></p>
+              <footer class="pt-3 mt-4 text-muted">2022
+                &copy;IfeOluwa  <a href="https://mobile.twitter.com/ifejaye" >Twitter</a>
+              </footer>    
+            </form>
+          </div>
+    </main>
+      <%- include('../partials/footer')%>
+  </body>
 </html>

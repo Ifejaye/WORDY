@@ -140,6 +140,43 @@ const add_new_comment = (req,res)=>{
     };
 
 
+const like_a_post = (req,res)=>{
+    console.log(req.session.user);
+
+    const post_id = req.params.id;
+    User.findOne({username: req.session.user})
+    .then((result)=>{
+        Post.findByIdAndUpdate(post_id, { $push: { likes: result._id } })
+        .then((result2)=>{
+            console.log('done');
+            res.redirect(`/posts/read/${post_id}`)
+        }).catch((err)=>{
+            console.log(err);
+        });
+
+        return result._id
+    })
+   
+};
+
+const unlike_a_post = (req,res)=>{
+    console.log(req.session.user);
+
+    const post_id = req.params.id;
+    User.findOne({username: req.session.user})
+    .then((result)=>{
+        Post.findByIdAndUpdate(post_id, { $pull: { likes: result._id } })
+        .then((result2)=>{
+            console.log('done');
+            res.redirect(`/posts/read/${post_id}`)
+        }).catch((err)=>{
+            console.log(err);
+        });
+
+        return result._id
+    })   
+}
+
 module.exports = {
     get_new_post,
     publish_new_post,
@@ -148,4 +185,6 @@ module.exports = {
     update_single_post,
     delete_single_post,
     add_new_comment,
+    like_a_post,
+    unlike_a_post,
 }

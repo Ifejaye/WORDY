@@ -10,17 +10,7 @@ const get_signin = (req,res)=>{
 
 //To get the signup page
 const get_signup = async(req,res)=>{
-    const {username, email, password } = req.body
-    let user = await User.findOne({email})
-    if (email) {
-        console.log('User already exist');
-        res.redirect('/signup')
-    } else {
-    req.session.save(()=>{
-        console.log('done');
-    })
-    res.render('signup')
-    }   
+        res.render('signup')
 }
 
 // To sumbmit our sign in page
@@ -47,7 +37,7 @@ const submit_login = async(req,res)=>{
                     console.log(req.session);
                     req.session.save(function (err) {
                       if (err) 
-                      return render({mismatch: "body"})
+                      console.log(err);
                       res.redirect('/')
                     })
                   })
@@ -57,7 +47,10 @@ const submit_login = async(req,res)=>{
                 res.redirect('/signin')
             }   
     } else {
-        res.render('signin',{mismatch: "body"})
+        if (err) {
+            console.log(err);
+        }
+        res.render('signin')
     } 
 }
 
@@ -87,14 +80,18 @@ const create_new_user = async(req,res)=>{
                 res.redirect('/signin');
                  }
             catch{
-                console.log("trial failed");
-                console.log(error);
+                if (error) {
+                    console.log(error);
+                    res.redirect('/signup');
+                    
+                }
+                // console.log("trial failed");
                  }
         }else{
             res.redirect('/about');
         }
     } catch (error) {
-       console.log('error'); 
+       console.log(error); 
     }
 }
 

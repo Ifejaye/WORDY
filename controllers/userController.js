@@ -22,23 +22,22 @@ const submit_login = async(req,res)=>{
     let user =  await User.findOne({email}) 
     if (user) {
         const validPassword = await bcrypt.compare(password, user.password);
-        
-            console.log(validPassword);
-            if (email == user.email && validPassword) {
+                    if (email == user.email && validPassword) {
                 // This is where express session takes over to help me save my session
-
+                console.log('email valid');
                 req.session.regenerate(function (err) {
                     if (err) next(err)
                 
                     // store user information in session, typically a user id
-                    console.log(req.body);
                     req.session.user =user.username
-                
-                    console.log(req.session);
                     req.session.save(function (err) {
-                      if (err) 
-                      console.log(err);
-                      res.redirect('/')
+                      if (err){
+                        console.log(err);
+
+                      }else{
+                        res.redirect('/');
+                        // res.redirect('/signin')
+                      }
                     })
                   })
 
@@ -47,13 +46,9 @@ const submit_login = async(req,res)=>{
                 res.redirect('/signin')
             }   
     } else {
-        if (err) {
-            console.log(err);
-        }
         res.render('signin')
-    } 
-}
-
+        }
+    };
 
 //  To submit details for sign up, that is, to create new user
 const create_new_user = async(req,res)=>{

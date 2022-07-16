@@ -42,7 +42,10 @@ app.use(
         resave: true,
         rolling: true,
         saveUninitialized: true,
-        store: store,  
+        store: store, 
+        cookie: {
+            maxAge: 1000*60*60*2   // 1000ms*60s*60mins*2hours
+        } 
     })
 );
 

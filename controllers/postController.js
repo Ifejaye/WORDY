@@ -6,6 +6,7 @@ const { User } = require('../models/user');
 
 
 
+
 // for new posts
 const get_new_post = (req,res)=>{
     res.render('new_post');
@@ -44,6 +45,7 @@ const get_single_post = (req,res)=>{
     
     const commentResult = await Comment
     .find({sourcePost: postId})
+    .sort({createdAt: -1})
     .populate('sourcePost')
     .then((result)=>{
         return result      
@@ -52,19 +54,25 @@ const get_single_post = (req,res)=>{
     }
     );
     const aUser = req.session.user;
-    
+
     const userResult = await User
     .findOne({username: req.session.user})
     .then((result)=>{
+        console.log(result);
         return result._id
+    }).catch((error)=>{
+        console.log(error);
     })
+
+    
      const liked = postResult.likes.includes(userResult)
      if (liked) {
         res.render('post',{
             posts:postResult,
             comments: commentResult,
             aUser: aUser,
-            likee: true
+            likee: true,
+            myDate: myDate,
         })
         
      } else {
@@ -135,7 +143,7 @@ const add_new_comment = (req,res)=>{
             if (err) {
               console.log(err);
             }
-            res.redirect('/')
+            res.redirect(`/posts/read/${postId}`)
           });
     };
 
@@ -148,10 +156,17 @@ const like_a_post = (req,res)=>{
     .then((result)=>{
         Post.findByIdAndUpdate(post_id, { $push: { likes: result._id } })
         .then((result2)=>{
-            console.log('done');
-            res.redirect(`/posts/read/${post_id}`)
+            res.json({
+                status: true,
+                message: 'Post liked successfully',
+                redirect: `/posts/read/${post_id}`,
+            });
         }).catch((err)=>{
-            console.log(err);
+            res.status(400).json({
+                status: false,
+                message: 'Something went wrong',
+                full_error: error,
+            });
         });
 
         return result._id
